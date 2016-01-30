@@ -44,15 +44,15 @@ subroutine rhs(x,y,f,fd,i)
 !   ome2 = -0.04
 !   print*,'x=',x
 
-  pd = 1. ; pdd = 0.
+  pd = 1.d0 ; pdd = 0.d0
   b = magnetic_field
 !   k = y(5)
-  rho = 1./((1. + x*x/8.)**2.)
-  rhod = -2. * (x/4.) / ((1. + x*x/8.)**3.)
-  rhodd = 3./8.*x*x / ((1. + x*x/8.)**4.) - 0.5/((1. + x*x/8.)**3.)
-  psid = x/(2.+x*x/4.)
+  rho = 1.d0/((1.d0 + x*x/8.d0)**2.d0)
+  rhod = -2.d0 * (x/4.d0) / ((1.d0 + x*x/8.d0)**3.d0)
+  rhodd = 3.d0/8.d0*x*x / ((1.d0 + x*x/8.d0)**4.d0) - 0.5d0/((1.d0 + x*x/8.d0)**3.d0)
+  psid = x/(2.d0+x*x/4.d0)
   q1 = -b*b*y(5)*y(5)/(omegg*(eta*b*b*y(5)*y(5)-omegg))
-  f = 0.; fd = 0.
+  f = 0.d0; fd = 0.d0
   ! matrix f coefficients
 !   c1 = (k*k*b*b)/ome2
 !   a1 = x*(-c1/rho*(pdd-2.*pd/rho)*rhod + (pdd-2.*b*b/(rho*rho))*rhod + psid)
@@ -69,29 +69,29 @@ subroutine rhs(x,y,f,fd,i)
   f(1) = rho*y(3) - y(1)*pdd*rhod - y(1)*psid + q1*y(3)
   fd(1,1) = - pdd*rhod - psid
   fd(1,3) = rho + q1
-  fd(1,5) = (-2.*b*b*y(5)*y(3)*(omegg*(eta*b*b*y(5)*y(5)-omegg)) &
-          & -2.*omegg*eta*b*b*y(5)*(-b*b*y(5)*y(5)*y(3))) &
-          & /(omegg*(eta*b*b*y(5)*y(5)-omegg))**2.
+  fd(1,5) = (-2.d0*b*b*y(5)*y(3)*(omegg*(eta*b*b*y(5)*y(5)-omegg)) &
+          & -2.d0*omegg*eta*b*b*y(5)*(-b*b*y(5)*y(5)*y(3))) &
+          & /(omegg*(eta*b*b*y(5)*y(5)-omegg))**2.d0
   
   f(2) = y(4)
-  fd(2,4) = 1.
+  fd(2,4) = 1.d0
    
   f(3) = -y(3)*rho + x*(y(5)*y(5)-ome2)*y(1) + x*y(5)*y(5)*rho*y(2) &
        & - x*y(3)*rhod
   fd(3,1) = x*(y(5)*y(5)-ome2)
   fd(3,2) = x*y(5)*y(5)*rho
   fd(3,3) = -rho - x*rhod
-  fd(3,5) = 2.*x*y(5)*y(1) + 2*x*y(5)*rho*y(2)
+  fd(3,5) = 2.d0*x*y(5)*y(1) + 2*x*y(5)*rho*y(2)
 
   f(4) = x*y(5)*y(5)*y(2) + x*y(1)
   fd(4,1) = x
   fd(4,2) = x*y(5)*y(5)
-  fd(4,5) = 2.*x*y(5)*y(2)
+  fd(4,5) = 2.d0*x*y(5)*y(2)
   
-  f(5) = 0.
+  f(5) = 0.d0
   
   f(6) = y(7)
-  fd(6,7) = 1.
+  fd(6,7) = 1.d0
   
   f(7) = eta*b*b*y(6)*y(5)*y(5)*x - omegg*y(6)*x &
          & - b*x*(-omegg*y(1)/rho - y(5)*y(5)*y(2)/omegg & 
@@ -100,8 +100,8 @@ subroutine rhs(x,y,f,fd,i)
   fd(7,1) = -b*x*(-omegg/rho - y(5)*y(5)*pd/omegg/rho)
   fd(7,2) = b*x*y(5)*y(5)/omegg
   fd(7,3) = -b*x*rhod/omegg/rho
-  fd(7,5) = 2.*eta*b*b*y(6)*x*y(5) - b*x*(-2.*y(5)*y(2)/omegg &
-            & -2.*y(5)*y(1)*pd/omegg/rho)
+  fd(7,5) = 2.d0*eta*b*b*y(6)*x*y(5) - b*x*(-2.d0*y(5)*y(2)/omegg &
+            & -2.d0*y(5)*y(1)*pd/omegg/rho)
   fd(7,6) = eta*b*b*y(5)*y(5)*x - omegg*x
 !!!!!!!!!!!!! end of new f matrix
 !!!!!!!!!!!!! print f and fd matrices

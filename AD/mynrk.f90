@@ -187,7 +187,7 @@ implicit none
             sum2=sum2+dabs(y(v(i),n))
             if(dabs(y(v(i),n)).gt.1.d-15) then
 !                test=dabs(b(i,n))/(dabs(y(v(i),n)+1.d-14))
-               test=dabs(b(i,n))/(dabs(y(v(i),n)+2.2204460492503131E-016))
+               test=dabs(b(i,n))/(dabs(y(v(i),n)+2.2204460492503131D-016))
             else 
                test = 0.d0
             endif
@@ -198,7 +198,7 @@ implicit none
          enddo
          sy(v(i)) = sum2/nn
 !          ea(v(i),1) = sum1/sum2
-         ea(v(i),1) = sum1/(sum2+2.2204460492503131E-015)
+         ea(v(i),1) = sum1/(sum2+2.2204460492503131D-015)
          ea(v(i),2) = dmax
          ea(v(i),3) = nmax 
       enddo

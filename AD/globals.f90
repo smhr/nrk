@@ -54,7 +54,7 @@ module initializeNRK
    write (*,'(a,2x,3f9.4)') 'Omega^2: Desired max, min & step are', ome2_up, ome2_low, ome2_step
    write (*,'(a,2x,3f9.4)') 'Wave number: Desired max, min & step are:  ', wave_n_up, wave_n_low, wave_n_step
    write (*,'(a,2x,f9.4)') 'magnetic field strength is', magnetic_field
-   write (*,'(a,2x,f9.4)') 'eta is', eta
+   write (*,'(a,2x,f11.6)') 'eta is', eta
    write (*,*) ''
    
   end subroutine printPARAMETER

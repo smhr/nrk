@@ -11,11 +11,11 @@ use initializeNRK
   double precision, dimension(nn) :: rho, rhod
   double precision :: pd, b
   
-  pd = 1. 
+  pd = 1.d0 
   b = magnetic_field
   do i=1,nn
-         rho(i) = 1./((1. + x(i)*x(i)/8.)**2.)
-         rhod(i) = -2. * (x(i)/4.) / ((1. + x(i)*x(i)/8.)**3.)
+         rho(i) = 1.d0/((1.d0 + x(i)*x(i)/8.d0)**2.d0)
+         rhod(i) = -2.d0 * (x(i)/4.d0) / ((1.d0 + x(i)*x(i)/8.d0)**3.d0)
   enddo
 !   double precision :: k
       
@@ -85,15 +85,15 @@ print*,"nprevious =", nprevious
 !     enddo
  
      do i = 1,nn
-	y(1,i) = 1. ! f
+	y(1,i) = 1.d0 ! f
 ! 	y(1,i) = 1./(1.+x(i)) ! f
         y(2,i) = -y(1,i)/(wave_n*wave_n) ! phi
-        y(3,i) = 0. ! w
-        y(4,i) = 0. ! dphi/dx
+        y(3,i) = 0.d0 ! w
+        y(4,i) = 0.d0 ! dphi/dx
         y(5,i) = wave_n  ! k
-        y(6,i) = (1. - y(5,i)**2./ome2*pd)*b*y(1,i)/rho(i) &
+        y(6,i) = (1.d0 - y(5,i)**2.d0/ome2*pd)*b*y(1,i)/rho(i) &
                & - y(5,i)**2./ome2*b*y(2,i)
-        y(7,i) = - (1. - y(5,i)**2./ome2*pd)*b*y(1,i)/rho(i)/rho(i) &
+        y(7,i) = - (1.d0 - y(5,i)**2.d0/ome2*pd)*b*y(1,i)/rho(i)/rho(i) &
                & * rhod(i)
 !         print*,i,y(6,i),y(7,i)
      enddo

@@ -21,7 +21,7 @@ use initializeNRK
   open (unit=91, file='rho.dat')
   do i=1,nn
      x(i) = xa+(xb-xa)*(i-1.d0)/(nn-1.d0)
-     rho_val(i) = 1./((1. + x(i)*x(i)/8.)**2.)
+     rho_val(i) = 1.d0/((1. + x(i)*x(i)/8.d0)**2.d0)
      write(91,*) x(i), rho_val(i)
   enddo
 !   flush(91)

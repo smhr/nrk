@@ -2,7 +2,7 @@ subroutine mesh(x,nprevious)
 use initializeNRK
   implicit none
   
-  double precision :: xa = 0. ! Position of first boundary
+  double precision :: xa = 0.d0 ! Position of first boundary
 !   double precision :: xb = 10.d0 ! Postition of second boundary
 
   double precision, dimension(nn),intent(out) :: x

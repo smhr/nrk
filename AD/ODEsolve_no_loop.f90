@@ -46,7 +46,7 @@ call density (rho_val)
 ! wave_n = 0.55
 wave_n = wave_n_up
 ! do while ( wave_n < 0.6 .and. wave_n > 0. )
-x = 0.
+x = 0.d0
 nprevious = 2
 call mesh(x,nprevious)
 !do while ( wave_n <= wave_n_up .and. wave_n >= wave_n_low )
@@ -57,8 +57,8 @@ call mesh(x,nprevious)
     print*,"wave_n, ome2 =", wave_n, ome2
 !    do while ( ome2 <= ome2_up .and. ome2 > ome2_low )
 !          print*,'fffffffffffff'
-         y = 0.
-         ea = 0.; v = 0.
+         y = 0.d0
+         ea = 0.d0; v = 0
          
 !          call mesh(x,nprevious)
          call guess(x,y,nprevious)
