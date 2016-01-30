@@ -1,6 +1,8 @@
+AD/*.mod
 AD/*.exe
 AD/*.exe
 AD/*.swp
+no_AD/*.mod
 no_AD/*.ini
 no_AD/*.swp
 no_AD/*.ini
