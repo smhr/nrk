@@ -45,7 +45,7 @@ use initializeNRK
 ! print *,'magnetic_field =', magnetic_field
 ! wave_n = 0.55
 wave_n = wave_n_up
-do while ( wave_n < 0.6 .and. wave_n > 0. )
+! do while ( wave_n < 0.6 .and. wave_n > 0. )
 x = 0.d0
 nprevious = 2
 call mesh(x,nprevious)
