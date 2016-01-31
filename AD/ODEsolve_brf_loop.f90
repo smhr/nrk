@@ -45,11 +45,11 @@ use initializeNRK
 ! print *,'magnetic_field =', magnetic_field
 ! wave_n = 0.55
 wave_n = wave_n_up
-! do while ( wave_n < 0.6 .and. wave_n > 0. )
+do while ( wave_n < 0.6 .and. wave_n > 0. )
 x = 0.d0
 nprevious = 2
 call mesh(x,nprevious)
-!do while ( wave_n <= wave_n_up .and. wave_n >= wave_n_low )
+   do while ( wave_n <= wave_n_up .and. wave_n >= wave_n_low )
 !     print*,'pppppppppp'
     ome2 = ome2_up
     omegg2 = - ome2
@@ -119,10 +119,10 @@ call mesh(x,nprevious)
            write(6,'(a,2x,3f15.6,i6,e18.5)')'NO: 1st_k, final_k, ome2, iter, amean(ea) =', wave_n, y(5,nn), ome2, iter, amean(ea)
              flush(6)
          enddo
-!         ome2 = ome2 - ome2_step
-!    enddo
-!    wave_n = wave_n - wave_n_step
-!enddo
+        ome2 = ome2 - ome2_step
+   enddo
+   wave_n = wave_n - wave_n_step
+enddo
 
 !!! call printresult(x,y)
 close(21)
