@@ -55,7 +55,7 @@ call mesh(x,nprevious)
     omegg2 = - ome2
     omegg = sqrt(omegg2)
     print*,"wave_n, ome2 =", wave_n, ome2
-!    do while ( ome2 <= ome2_up .and. ome2 > ome2_low )
+   do while ( ome2 <= ome2_up .and. ome2 > ome2_low )
 !          print*,'fffffffffffff'
          y = 0.d0
          ea = 0.d0; v = 0
