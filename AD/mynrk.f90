@@ -161,10 +161,10 @@ implicit none
       do i=1,ii
          
          do n=1,nn
-            do while (dabs(b(i,n)) > dabs(y(v(i),n)))
-!                y(v(i),n)=y(v(i),n)+ucy/2.*b(i,n)
-               b(i,n) = b(i,n)/2.
-            enddo
+!             do while (dabs(b(i,n)) > dabs(y(v(i),n)))
+! !                y(v(i),n)=y(v(i),n)+ucy/2.*b(i,n)
+!                b(i,n) = b(i,n)/2.
+!             enddo
 !                print*, "i,n,b(i,n)",i, n, b(i,n)
                if (b(i,n) /= b(i,n)) then 
                   print*, "i,n,b(i,n)",i, n, b(i,n)
