@@ -47,15 +47,17 @@ call density (rho_val)
 wave_n = wave_n_up
 ! do while ( wave_n < 0.6 .and. wave_n > 0. )
 nprevious = 0
+x = 0.d0
+call mesh(x,mesh_selector)
 do while ( wave_n <= wave_n_up .and. wave_n >= wave_n_low )
 !     print*,'pppppppppp'
     ome2 = ome2_up
     do while ( ome2 <= ome2_up .and. ome2 > ome2_low )
 !          print*,'fffffffffffff'
-         x = 0.; y = 0.
-         ea = 0.; v = 0.
+         y = 0.d0
+         ea = 0.d0; v = 0
          
-         call mesh(x)
+!          call mesh(x)
          call guess(x,y,nprevious)
          ! *** Call to routine to initialize the permutation vector v.
 

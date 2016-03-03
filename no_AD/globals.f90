@@ -10,6 +10,7 @@ module initializeNRK
   double precision :: ucy != 1.d0  !convergence speed (do not change unless good reason)
   double precision :: acy != 1.d-7  !desired accuracy of solution
 !   integer :: nprevious ! Use previous result (yes=1,no=0)
+  integer :: mesh_selector ! Select mesh type (0: equally spaced, 1: read mesh.dat)
   
   double precision :: ome2, ome2_up, ome2_low, ome2_step
   double precision :: wave_n, wave_n_up, wave_n_low, wave_n_step
@@ -29,6 +30,7 @@ module initializeNRK
    read (200,*) ucy
    read (200,*) acy
 !    read (200,*) nprevious
+   integer :: mesh_selector
    
    read (200,*) ome2_up, ome2_low, ome2_step
    read (200,*) wave_n_up, wave_n_low, wave_n_step
