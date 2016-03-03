@@ -48,7 +48,7 @@ wave_n = wave_n_up
 ! do while ( wave_n < 0.6 .and. wave_n > 0. )
 nprevious = 0
 x = 0.d0
-call mesh(x,mesh_selector)
+call mesh(x)
 do while ( wave_n <= wave_n_up .and. wave_n >= wave_n_low )
 !     print*,'pppppppppp'
     ome2 = ome2_up

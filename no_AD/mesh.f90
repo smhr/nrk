@@ -1,4 +1,4 @@
-subroutine mesh(x,mesh_selector)
+subroutine mesh(x)
 use initializeNRK
   implicit none
   
@@ -22,7 +22,7 @@ use initializeNRK
      do i=1,nn
         x(i) = xa+(xb-xa)*(i-1.d0)/(nn-1.d0)
      enddo
-  elseif (mesh_selector == 1)
+  elseif (mesh_selector == 1) then
      open (10, file='mesh.dat')
      do i=1,nn
         read (10,*) x(i)
