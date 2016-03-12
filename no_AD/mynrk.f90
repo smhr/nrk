@@ -257,9 +257,9 @@ use initializeNRK
   integer :: j
 
 !      write(*,*) ' - Starting readinbc1 - '
-  do j=1,ii
+!   do j=1,ii
 !          write(*,*) 'in readinbc1: v(',j,')=',v(j)
-  enddo
+!   enddo
       
   do j=1,ka
 !      print*,j,gs(1:ka,j),'###',gs(1:ka,v(j)),'***'

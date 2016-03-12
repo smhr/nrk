@@ -23,7 +23,7 @@ use initializeNRK
         x(i) = xa+(xb-xa)*(i-1.d0)/(nn-1.d0)
      enddo
   elseif (mesh_selector == 1) then
-     open (10, file='mesh.dat')
+     open (10, file='mesh.input')
      do i=1,nn
         read (10,*) x(i)
      enddo
