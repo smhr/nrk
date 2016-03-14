@@ -44,7 +44,7 @@ subroutine rhs(x,y,f,fd,i)
 !   ome2 = -0.04
 !   print*,'x=',x
   
-  if (x > 10.d0) eta = 0.00001
+  if (x > ADlimit) eta = 0.00001
   pd = 1.d0 ; pdd = 0.d0
   b = magnetic_field
 !   k = y(5)

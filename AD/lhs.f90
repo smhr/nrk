@@ -16,7 +16,7 @@ double precision function am(i,j,x,y,in)
   double precision :: x, rho, pd, pdd, b, j1
   integer :: i,j,in
 !begin_smhr 
-  if (x > 10.d0) eta = 0.00001
+  if (x > ADlimit) eta = 0.00001
   pd = 1.d0 ; pdd = 0.d0
   b = magnetic_field
   rho = 1.d0/((1.d0 + x*x/8.d0)**2.d0)
@@ -56,7 +56,7 @@ double precision function amd(i,j,l,x,y,in)
   double precision :: x, b, pd, pdd, rho
   integer :: i,j,l,in
   
-  if (x > 10.d0) eta = 0.00001
+  if (x > ADlimit) eta = 0.00001
   pd = 1.d0 ; pdd = 0.d0
   b = magnetic_field
   rho = 1.d0/((1.d0 + x*x/8.d0)**2.d0)

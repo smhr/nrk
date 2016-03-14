@@ -13,8 +13,9 @@ module initializeNRK
   
   double precision :: ome2, ome2_up, ome2_low, ome2_step
   double precision :: wave_n, wave_n_up, wave_n_low, wave_n_step
-  double precision:: magnetic_field
-  double precision:: omegg, eta, omegg2
+  double precision :: magnetic_field
+  double precision :: omegg, eta, omegg2
+  double precision :: ADlimit
   
   contains
   
@@ -35,6 +36,7 @@ module initializeNRK
    read (200,*) wave_n_up, wave_n_low, wave_n_step
    read (200,*) magnetic_field
    read (200,*) eta
+   read (200,*) ADlimit
    
   end subroutine readPARAMETER
   
@@ -50,11 +52,11 @@ module initializeNRK
    write (*,'(a,2x,f6.3)') 'Convergence speed is', ucy
    write (*,'(a,2x,d12.4)') 'Desired accuracy of solution is', acy
 !    write (*,'(a,2x,i2)') 'Use previous result (yes=1,no=0)', nprevious
-   
    write (*,'(a,2x,3f9.4)') 'Omega^2: Desired max, min & step are', ome2_up, ome2_low, ome2_step
    write (*,'(a,2x,3f9.4)') 'Wave number: Desired max, min & step are:  ', wave_n_up, wave_n_low, wave_n_step
    write (*,'(a,2x,f9.4)') 'magnetic field strength is', magnetic_field
    write (*,'(a,2x,f11.6)') 'eta is', eta
+   write (*,'(a,2x,f11.6)') 'ADlimit is', ADlimit
    write (*,*) ''
    
   end subroutine printPARAMETER
