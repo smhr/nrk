@@ -15,9 +15,11 @@ use initializeNRK
   character(len=40) :: dir_command
   character(len=100) :: sweep_blanks, output_file
   double precision, dimension(nn) :: bz, dbz
-!   double precision, dimension(nn-1) :: dbz
+  integer :: lapackUsage
   
   external rhs,bc,am,amd
+  
+  lapackUsage = 0
 
 ! *** Driver program to perform the solution of ii coupled nonlinear
 ! *** ODEs in a two-point BVP of the form
@@ -53,7 +55,7 @@ call mesh(x,nprevious)
 !     print*,'pppppppppp'
     ome2 = ome2_up
     omegg2 = - ome2
-    omegg = sqrt(omegg2)
+    omegg = dsqrt(omegg2)
     print*,"wave_n, ome2 =", wave_n, ome2
 !    do while ( ome2 <= ome2_up .and. ome2 > ome2_low )
 !          print*,'fffffffffffff'
@@ -70,7 +72,11 @@ call mesh(x,nprevious)
    
          do iter=1,maxiter           !solution of linear equation
 !              write(6,'(a20,f8.3)')'in odesolve:,x(2)',x(2)
-             call mynrk(x,y,bc,am,amd,ea,v)
+             if (lapackUsage == 1) then
+                call lapacky(x,y,bc,am,amd,ea,v)
+             else
+                call mynrk(x,y,bc,am,amd,ea,v)
+             endif
              do j=1,ii
                 print*, "j, ea",j, ea(j,1)
              enddo
@@ -96,7 +102,7 @@ call mesh(x,nprevious)
              if (amean(ea).lt.acy) then
 !              if (err.lt.acy) then
             write(6,'(a48,3f15.6,i6,e18.5)') 'yes: 1st_k, final_k, ome2, iter ,amean(ea) =', wave_n, y(5,nn), ome2, iter,amean(ea)
-                    write(21,*) wave_n, y(5,nn), ome2, iter, amean(ea)
+                    write(21,'(3f15.8,i5,e18.5)') wave_n, y(5,nn), ome2, iter, amean(ea)
                     write(output_file , '( a13, f10.6, a1, f10.6 )' ) 'brf_results/',y(5,nn),'_',ome2
                     flush(21)
                     nprevious = 1
@@ -107,7 +113,7 @@ call mesh(x,nprevious)
 !                        write(44,'(f6.3, 7f15.10)') x(i), y(1,i), y(2,i), y(3,i), y(4,i), y(5,i), bz(i), dbz(i)
 !                     enddo
                     do i=1, nn
-                       write(44,*) x(i), y(1,i), y(2,i), y(3,i), y(4,i), y(5,i), y(6,i), y(7,i)
+                       write(44,'(8f12.8)') x(i), y(1,i), y(2,i), y(3,i), y(4,i), y(5,i), y(6,i), y(7,i)
                     enddo
                     close(44)
 !                     stop
