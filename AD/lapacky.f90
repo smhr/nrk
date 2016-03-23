@@ -1,4 +1,4 @@
-subroutine lapacky (x,y,bc,am,amd,ea,v)
+subroutine lapacky (x,y,bc,am,amd,ea,v,b)
 
 use initializeNRK
 ! USE LA_PRECISION, ONLY: WP => DP
@@ -15,7 +15,7 @@ implicit none
  double precision, dimension(ii) :: DVEC, dy, g
  double precision, dimension(ii,2) :: f
  double precision, dimension(ii,ii,2) :: fd
- double precision, dimension(ii*nn) :: b
+ double precision, dimension(ii*nn), intent(out) :: b
 !  REAL(WP), allocatable :: b(:)
  double precision, dimension(ii*nn,ii*nn) :: wMAT
 !  REAL(WP), dimension(ii*nn,ii*nn) :: wMAT
@@ -201,8 +201,8 @@ implicit none
  
 ! calculate relative error
     do i = 1, ii
-         ea(i,1) = 0.d0
-!          ea(v(i),1) = 0.d0
+!          ea(i,1) = 0.d0
+         ea(v(i),1) = 0.d0
          sum1=0.d0
          sum2=0.d0
          dmax=0.d0
@@ -225,8 +225,9 @@ implicit none
          ea(v(i),1) = sum1/(sum2+2.2204460492503131D-015)
          ea(v(i),2) = dmax
          ea(v(i),3) = nmax 
+         write(*,'(a25,3x,2i4,2f16.8)'),"i, v(i), sum1, sum2", i, v(i), sum1, sum2
       enddo
-      print*,"sum1, sum2", sum1, sum2
+      
 !       stop
 
 end subroutine lapacky

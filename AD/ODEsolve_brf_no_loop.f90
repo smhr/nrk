@@ -7,19 +7,20 @@ use initializeNRK
   double precision, dimension(ii,nn) :: y
   double precision, dimension(ii,3) :: ea
   integer, dimension(ii) :: v
-  integer :: i,j,iter, nprevious
+  integer :: i,j,iter, nprevious, n
   double precision :: amean
+  double precision, dimension(ii*nn) :: b
   
   double precision, dimension(nn) :: rho_val
   double precision :: err
   character(len=40) :: dir_command
-  character(len=100) :: sweep_blanks, output_file
+  character(len=100) :: sweep_blanks, output_file, not_converged_file, deltaY_file
   double precision, dimension(nn) :: bz, dbz
-  integer :: lapackUsage
+  integer :: lapackUsage, verbos
   
   external rhs,bc,am,amd
   
-  lapackUsage = 0
+  lapackUsage = 1; verbos = 1
 
 ! *** Driver program to perform the solution of ii coupled nonlinear
 ! *** ODEs in a two-point BVP of the form
@@ -29,6 +30,8 @@ use initializeNRK
   call printPARAMETER ()
   write(*,*) '- Starting ODEsolve - '
   dir_command = 'mkdir brf_results'
+  call system ( dir_command )
+  dir_command = 'mkdir not_converged'
   call system ( dir_command )
 !   call readPARAMETER ()
 !   call printPARAMETER ()
@@ -73,7 +76,7 @@ call mesh(x,nprevious)
          do iter=1,maxiter           !solution of linear equation
 !              write(6,'(a20,f8.3)')'in odesolve:,x(2)',x(2)
              if (lapackUsage == 1) then
-                call lapacky(x,y,bc,am,amd,ea,v)
+                call lapacky(x,y,bc,am,amd,ea,v,b)
              else
                 call mynrk(x,y,bc,am,amd,ea,v)
              endif
@@ -113,17 +116,31 @@ call mesh(x,nprevious)
 !                        write(44,'(f6.3, 7f15.10)') x(i), y(1,i), y(2,i), y(3,i), y(4,i), y(5,i), bz(i), dbz(i)
 !                     enddo
                     do i=1, nn
-                       write(44,'(8f12.8)') x(i), y(1,i), y(2,i), y(3,i), y(4,i), y(5,i), y(6,i), y(7,i)
+                       write(44,'(8f17.8)') x(i), y(1,i), y(2,i), y(3,i), y(4,i), y(5,i), y(6,i), y(7,i)
                     enddo
                     close(44)
 !                     stop
                     exit
              endif 
-!              nprevious = 1
-!              call mesh(x,nprevious)
-!              call guess(x,y,nprevious)
+            
            write(6,'(a,2x,3f15.6,i6,e18.5)')'NO: 1st_k, final_k, ome2, iter, amean(ea) =', wave_n, y(5,nn), ome2, iter, amean(ea)
              flush(6)
+            if (verbos == 1) then
+             write(not_converged_file , '( a15, f10.6, a1, f10.6, a1, i3 )' ) 'not_converged/',wave_n,'_',ome2,'_',iter
+                    not_converged_file = sweep_blanks(not_converged_file)
+                    open(45,file=not_converged_file)
+                    do i=1, nn
+                       write(45,'(8f17.8)') x(i), y(1,i), y(2,i), y(3,i), y(4,i), y(5,i), y(6,i), y(7,i)
+                    enddo
+                    close(45)
+             write(deltaY_file , '( a25, f10.6, a1, f10.6, a1, i3 )' ) 'not_converged/deltaY_',wave_n,'_',ome2,'_',iter
+                    deltaY_file = sweep_blanks(deltaY_file)
+                    open(46,file=deltaY_file)
+                    do n = 0, nn -1
+                          write(46,'(8f17.8)') x(n+1), (b(n*ii + i), i = 1, ii)
+                    enddo
+                    close(46)
+            endif
          enddo
 !         ome2 = ome2 - ome2_step
 !    enddo

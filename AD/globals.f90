@@ -10,6 +10,7 @@ module initializeNRK
   double precision :: ucy != 1.d0  !convergence speed (do not change unless good reason)
   double precision :: acy != 1.d-7  !desired accuracy of solution
 !   integer :: nprevious ! Use previous result (yes=1,no=0)
+  integer :: bcType
   
   double precision :: ome2, ome2_up, ome2_low, ome2_step
   double precision :: wave_n, wave_n_up, wave_n_low, wave_n_step
@@ -31,6 +32,7 @@ module initializeNRK
    read (200,*) ucy
    read (200,*) acy
 !    read (200,*) nprevious
+   read (200,*) bcType
    
    read (200,*) ome2_up, ome2_low, ome2_step
    read (200,*) wave_n_up, wave_n_low, wave_n_step
@@ -52,6 +54,7 @@ module initializeNRK
    write (*,'(a,2x,f6.3)') 'Convergence speed is', ucy
    write (*,'(a,2x,d12.4)') 'Desired accuracy of solution is', acy
 !    write (*,'(a,2x,i2)') 'Use previous result (yes=1,no=0)', nprevious
+   write (*,'(a,2x,i6)') 'Boundary condition type is', bcType
    write (*,'(a,2x,3f9.4)') 'Omega^2: Desired max, min & step are', ome2_up, ome2_low, ome2_step
    write (*,'(a,2x,3f9.4)') 'Wave number: Desired max, min & step are:  ', wave_n_up, wave_n_low, wave_n_step
    write (*,'(a,2x,f9.4)') 'magnetic field strength is', magnetic_field
