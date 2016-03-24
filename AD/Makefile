@@ -1,5 +1,5 @@
-#mkl77 = disable
-mkl77 = enable
+mkl77 = disable
+#mkl77 = enable
 loop_mod = off
 brf_mod = on
 

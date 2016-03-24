@@ -106,17 +106,17 @@ subroutine rhs(x,y,f,fd,i)
   fd(7,6) = eta*b*b*y(5)*y(5)*x - omegg*x
 !!!!!!!!!!!!! end of new f matrix
 !!!!!!!!!!!!! print f and fd matrices
-! print*,"++++++++++++++++"
+ print*,"++++++++++++++++"
 ! print*, "omegg2", omegg2
-! do j = 1, ii
-!    write (*,'(a35,i3,f14.4,5e11.3)') &
-!    &     "x, j, y(j), rho, rhod, psid, f(j)", &
-!    &      j, x, y(j), rho, rhod, psid, f(j)
-! enddo
-! print*,"================"
-! do j = 1, ii
-!    write (*,'(7e12.3)') (fd(j,k), k = 1, ii)
-! enddo
+ do j = 1, ii
+    write (*,'(a35,i3,f14.4,5e11.3)') &
+    &     "x, j, y(j), rho, rhod, psid, f(j)", &
+    &      j, x, y(j), rho, rhod, psid, f(j)
+ enddo
+ print*,"================"
+ do j = 1, ii
+    write (*,'(7e12.3)') (fd(j,k), k = 1, ii)
+ enddo
 !!!!!!!!!!!!!
 ! !   f(1) = y(3)*rho - y(1)*psid
 !   f(1) = -a1*y(1) - a2*y(2) - a3*y(3)

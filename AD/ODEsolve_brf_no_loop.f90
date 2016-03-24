@@ -20,7 +20,7 @@ use initializeNRK
   
   external rhs,bc,am,amd
   
-  lapackUsage = 1; verbos = 1
+  lapackUsage = 0; verbos = 1
 
 ! *** Driver program to perform the solution of ii coupled nonlinear
 ! *** ODEs in a two-point BVP of the form
@@ -116,7 +116,7 @@ call mesh(x,nprevious)
 !                        write(44,'(f6.3, 7f15.10)') x(i), y(1,i), y(2,i), y(3,i), y(4,i), y(5,i), bz(i), dbz(i)
 !                     enddo
                     do i=1, nn
-                       write(44,'(8f17.8)') x(i), y(1,i), y(2,i), y(3,i), y(4,i), y(5,i), y(6,i), y(7,i)
+                       write(44,'(f9.4,7f17.12)') x(i), y(1,i), y(2,i), y(3,i), y(4,i), y(5,i), y(6,i), y(7,i)
                     enddo
                     close(44)
 !                     stop
