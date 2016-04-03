@@ -1,4 +1,4 @@
-! *********************************************************************     
+! *********************************************************************
 subroutine ODEsolve
 use initializeNRK
   implicit none
@@ -10,17 +10,18 @@ use initializeNRK
   integer :: i,j,iter, nprevious, n
   double precision :: amean
   double precision, dimension(ii*nn) :: b
-  
+
   double precision, dimension(nn) :: rho_val
   double precision :: err
   character(len=40) :: dir_command
-  character(len=100) :: sweep_blanks, output_file, not_converged_file, deltaY_file
+  character(len=100) :: sweep_blanks, output_file, not_converged_file, deltaY_file, rhs_file
   double precision, dimension(nn) :: bz, dbz
   integer :: lapackUsage, verbos
-  
+  double precision :: l1, r1, r2, r3
+
   external rhs,bc,am,amd
-  
-  lapackUsage = 0; verbos = 1
+
+  lapackUsage = 0; verbos = 0
 
 ! *** Driver program to perform the solution of ii coupled nonlinear
 ! *** ODEs in a two-point BVP of the form
@@ -32,6 +33,8 @@ use initializeNRK
   dir_command = 'mkdir brf_results'
   call system ( dir_command )
   dir_command = 'mkdir not_converged'
+  call system ( dir_command )
+  dir_command = 'mkdir rhs_results'
   call system ( dir_command )
 !   call readPARAMETER ()
 !   call printPARAMETER ()
@@ -64,15 +67,15 @@ call mesh(x,nprevious)
 !          print*,'fffffffffffff'
          y = 0.d0
          ea = 0.d0; v = 0
-         
+
 !          call mesh(x,nprevious)
          call guess(x,y,nprevious)
          ! *** Call to routine to initialize the permutation vector v.
 
          call initializev(v)
 
-         ! **** Newton-Raphson-Kantorovich loop 
-   
+         ! **** Newton-Raphson-Kantorovich loop
+
          do iter=1,maxiter           !solution of linear equation
 !              write(6,'(a20,f8.3)')'in odesolve:,x(2)',x(2)
              if (lapackUsage == 1) then
@@ -84,7 +87,7 @@ call mesh(x,nprevious)
                 print*, "j, ea",j, ea(j,1)
              enddo
 
-             if(v(1).eq.0) then 
+             if(v(1).eq.0) then
                     write(6,*)'ERROR in V vector.'
                     exit   ! there is an error!
              endif
@@ -93,36 +96,41 @@ call mesh(x,nprevious)
 
              ! ****** Writing out the convergence properties
 !              write(*,*) 'Average error at iteration',iter,' is', amean(ea)
-         
+
 !              open(33,file='ea.dat',status='unknown')
 !              do i=1,ii
 !                   write(33,*) (ea(i,j),j=1,3)
 !              enddo
 !              close(33)
-     
+
              ! ****** If error is small enough, exit loop
 !              if(amean(ea).lt.acy) go to 100
              if (amean(ea).lt.acy) then
+!             if (amean(ea).lt.acy .and. dabs(y(6,nn)) <= 1.d-4) then
 !              if (err.lt.acy) then
             write(6,'(a48,3f15.6,i6,e18.5)') 'yes: 1st_k, final_k, ome2, iter ,amean(ea) =', wave_n, y(5,nn), ome2, iter,amean(ea)
-                    write(21,'(3f15.8,i5,e18.5)') wave_n, y(5,nn), ome2, iter, amean(ea)
+                    write(21,'(4f17.12,i5,e18.5)') wave_n, y(5,nn), ome2, eta, iter, amean(ea)
+                    write(6,'(a27,f17.12)') 'eta in ODEsolve is', eta
                     write(output_file , '( a13, f10.6, a1, f10.6 )' ) 'brf_results/',y(5,nn),'_',ome2
                     flush(21)
                     nprevious = 1
                     call printresult(x,y)
                     output_file = sweep_blanks(output_file)
                     open(44,file=output_file)
-!                     do i=1, nn-1
-!                        write(44,'(f6.3, 7f15.10)') x(i), y(1,i), y(2,i), y(3,i), y(4,i), y(5,i), bz(i), dbz(i)
-!                     enddo
+
+                    write(rhs_file , '( a13, f10.6, a1, f10.6 )' ) 'rhs_results/',y(5,nn),'_',ome2
+                    rhs_file = sweep_blanks(rhs_file)
+                    open(47,file=rhs_file)
                     do i=1, nn
                        write(44,'(f9.4,7f17.12)') x(i), y(1,i), y(2,i), y(3,i), y(4,i), y(5,i), y(6,i), y(7,i)
+                       call print_rhs (x(i), y(:,i), i, l1, r1, r2, r3)
+                       write(47,'(f9.4,4f17.12)') x(i), l1, r1, r2, r3
                     enddo
-                    close(44)
+                    close(44); close(47)
 !                     stop
                     exit
-             endif 
-            
+             endif
+
            write(6,'(a,2x,3f15.6,i6,e18.5)')'NO: 1st_k, final_k, ome2, iter, amean(ea) =', wave_n, y(5,nn), ome2, iter, amean(ea)
              flush(6)
             if (verbos == 1) then
@@ -156,16 +164,3 @@ end subroutine ODEsolve
 
 
 ! *********************************************************************
-
-
- 
-
-
-
-
-
-
-
-
-
-

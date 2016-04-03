@@ -4,7 +4,7 @@ loop_mod = off
 brf_mod = on
 
 FC = ifort
-# FC = gfortran
+#FC = gfortran
 ifeq ($(FC), gfortran)
  FFLAGS = -fbounds-check -fbacktrace
 else 
@@ -17,7 +17,7 @@ ifeq ($(mkl77), enable)
  MKLOPTIONS = -i8 -I$(MKLROOT)/include -Wl,--start-group $(MKLROOT)/lib/intel64/libmkl_intel_ilp64.a $(MKLROOT)/lib/intel64/libmkl_core.a $(MKLROOT)/lib/intel64/libmkl_sequential.a -Wl,--end-group -lpthread -lm -ldl
  FFLAGS += $(MKLOPTIONS)
  BINNAME = NRK_AD_brf_no_loop_mkl.exe
- SOURCE = globals.f90 bc.f90 density.f90 guess.f90 main.f90 mesh.f90 mynrk.f90 lapacky.f90 rhs.f90 ODEsolve_brf_no_loop.f90 amean.f90 lhs.f90 print.f90 sweep_blanks.f90
+ SOURCE = globals.f90 bc.f90 density.f90 guess.f90 main.f90 mesh.f90 mynrk.f90 lapacky.f90 rhs.f90 ODEsolve_brf_no_loop.f90 amean.f90 lhs.f90 print.f90 sweep_blanks.f90 print_rhs.f90
 endif
 
 ifeq ($(mkl77), disable)
@@ -29,7 +29,7 @@ ifeq ($(mkl77), disable)
  else
   ifeq ($(brf_mod), on)
    BINNAME = NRK_AD_brf_no_loop.exe
-   SOURCE = globals.f90 bc.f90 density.f90 guess.f90 main.f90 mesh.f90 mynrk.f90 rhs.f90 ODEsolve_brf_no_loop.f90 amean.f90 lhs.f90 print.f90 sweep_blanks.f90
+   SOURCE = globals.f90 bc.f90 density.f90 guess.f90 main.f90 mesh.f90 mynrk.f90 rhs.f90 ODEsolve_brf_no_loop.f90 amean.f90 lhs.f90 print.f90 sweep_blanks.f90 print_rhs.f90
   else
    BINNAME = NRK_AD_no_loop.exe
    SOURCE = globals.f90 bc.f90 density.f90 guess.f90 main.f90 mesh.f90 mynrk.f90 rhs.f90 ODEsolve_no_loop.f90 amean.f90 lhs.f90 print.f90 sweep_blanks.f90

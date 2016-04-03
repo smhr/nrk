@@ -1,12 +1,12 @@
 ! **********************************************************************
-subroutine rhs(x,y,f,fd,i)
+subroutine print_rhs(x,y,i,l1,r1,r2,r3)
   use initializeNRK
   implicit none
       
   double precision, dimension(ii) :: y, f
   double precision, dimension(ii,ii) :: fd
-  double precision :: rho, rhod, rhodd, psid, pd, pdd, b, q1, eh
-  double precision :: x
+  double precision :: rho, rhod, rhodd, psid, pd, pdd, b, q1
+  double precision :: x, l1, r1, r2, r3, eh
   integer :: i, j, k
 
 ! *** Subroutine in which the RHS of the system is entered, as
@@ -105,19 +105,31 @@ subroutine rhs(x,y,f,fd,i)
   fd(7,5) = 2.d0*eh*b*b*y(6)*x*y(5) - b*x*(-2.d0*y(5)*y(2)/omegg &
             & -2.d0*y(5)*y(1)*pd/omegg/rho)
   fd(7,6) = eh*b*b*y(5)*y(5)*x - omegg*x
+  
+  !!!!!!!!!!!!!!
+  l1 = eh*b*b*y(7)
+  r1 = eh*b*b*y(6)*y(5)*y(5)*x
+  r2 = omegg*y(6)*x
+  r3 = b*x*(-omegg*y(1)/rho - y(5)*y(5)*y(2)/omegg & 
+    &              - y(5)*y(5)*y(1)*pd/omegg/rho &
+    &              + y(3)/omegg/rho*rhod)
+    
+    write(*,'(a15,i5,2f17.12)') 'In meshpoint ', i, eh, b
+    
+  
 !!!!!!!!!!!!! end of new f matrix
 !!!!!!!!!!!!! print f and fd matrices
-!  print*,"++++++++++++++++"
-! ! print*, "omegg2", omegg2
-!  do j = 1, ii
-!     write (*,'(a35,i3,f14.4,5e11.3)') &
-!     &     "x, j, y(j), rho, rhod, psid, f(j)", &
-!     &      j, x, y(j), rho, rhod, psid, f(j)
-!  enddo
-!  print*,"================"
-!  do j = 1, ii
-!     write (*,'(7e12.3)') (fd(j,k), k = 1, ii)
-!  enddo
+ print*,"++++++++++++++++"
+! print*, "omegg2", omegg2
+ do j = 1, ii
+    write (*,'(a35,i3,f14.4,5e11.3)') &
+    &     "x, j, y(j), rho, rhod, psid, f(j)", &
+    &      j, x, y(j), rho, rhod, psid, f(j)
+ enddo
+ print*,"================"
+ do j = 1, ii
+    write (*,'(7e12.3)') (fd(j,k), k = 1, ii)
+ enddo
 !!!!!!!!!!!!!
 ! !   f(1) = y(3)*rho - y(1)*psid
 !   f(1) = -a1*y(1) - a2*y(2) - a3*y(3)
@@ -153,6 +165,6 @@ subroutine rhs(x,y,f,fd,i)
 
 !      write(*,*) '- Ending rhs - '
 
-end subroutine rhs
+end subroutine print_rhs
       
 
