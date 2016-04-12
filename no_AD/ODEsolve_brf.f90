@@ -91,7 +91,7 @@ do while ( wave_n <= wave_n_up .and. wave_n >= wave_n_low )
 !              if (err.lt.acy) then
             write(6,'(a28,3f15.6,i6,e18.5)') 'yes: 1st_k, final_k, ome2, iter ,amean(ea) =', wave_n, y(5,nn), ome2, iter,amean(ea)
                     write(21,'(3f15.6,i6,e18.5)') wave_n, y(5,nn), ome2, iter, amean(ea)
-                    write(output_file , '( a13, f8.4, a1, f8.4 )' ) 'brf_results/',y(5,nn),'_',ome2
+                    write(output_file , '( a13, f10.6, a1, f10.6 )' ) 'brf_results/',y(5,nn),'_',ome2
                     flush(21)
                     nprevious = 1
                     call printresult(x,y,bz,dbz)
