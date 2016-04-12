@@ -47,12 +47,14 @@ subroutine rhs(x,y,f,fd,i)
   eh = eta
   if (x > ADlimit) eh = 0.d0
   pd = 1.d0 ; pdd = 0.d0
-  b = magnetic_field
 !   k = y(5)
   rho = 1.d0/((1.d0 + x*x/8.d0)**2.d0)
   rhod = -2.d0 * (x/4.d0) / ((1.d0 + x*x/8.d0)**3.d0)
   rhodd = 3.d0/8.d0*x*x / ((1.d0 + x*x/8.d0)**4.d0) - 0.5d0/((1.d0 + x*x/8.d0)**3.d0)
   psid = x/(2.d0+x*x/4.d0)
+  b = magnetic_field
+!  b = magnetic_field * rho
+  
   q1 = -b*b*y(5)*y(5)/(omegg*(eh*b*b*y(5)*y(5)-omegg))
   f = 0.d0; fd = 0.d0
   ! matrix f coefficients
@@ -105,6 +107,7 @@ subroutine rhs(x,y,f,fd,i)
   fd(7,5) = 2.d0*eh*b*b*y(6)*x*y(5) - b*x*(-2.d0*y(5)*y(2)/omegg &
             & -2.d0*y(5)*y(1)*pd/omegg/rho)
   fd(7,6) = eh*b*b*y(5)*y(5)*x - omegg*x
+print*,"in rhs: b is", b
 !!!!!!!!!!!!! end of new f matrix
 !!!!!!!!!!!!! print f and fd matrices
 !  print*,"++++++++++++++++"

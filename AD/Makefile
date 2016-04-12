@@ -3,8 +3,8 @@ mkl77 = disable
 loop_mod = off
 brf_mod = on
 
-FC = ifort
-#FC = gfortran
+#FC = ifort
+FC = gfortran
 ifeq ($(FC), gfortran)
  FFLAGS = -fbounds-check -fbacktrace
 else 
@@ -24,7 +24,7 @@ ifeq ($(mkl77), disable)
  ifeq ($(loop_mod), on)
   ifeq ($(brf_mod), on)
    BINNAME = NRK_AD_brf_loop.exe
-   SOURCE = globals.f90 bc.f90 density.f90 guess.f90 main.f90 mesh.f90 mynrk.f90 rhs.f90 ODEsolve_brf_loop.f90 amean.f90 lhs.f90 print.f90 sweep_blanks.f90
+   SOURCE = globals.f90 bc.f90 density.f90 guess.f90 main.f90 mesh.f90 mynrk.f90 rhs.f90 ODEsolve_brf_loop.f90 amean.f90 lhs.f90 print.f90 sweep_blanks.f90 print_rhs.f90
   endif
  else
   ifeq ($(brf_mod), on)

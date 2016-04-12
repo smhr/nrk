@@ -79,7 +79,7 @@ call mesh(x,nprevious)
          do iter=1,maxiter           !solution of linear equation
 !              write(6,'(a20,f8.3)')'in odesolve:,x(2)',x(2)
              if (lapackUsage == 1) then
-                call lapacky(x,y,bc,am,amd,ea,v,b)
+!                call lapacky(x,y,bc,am,amd,ea,v,b)
              else
                 call mynrk(x,y,bc,am,amd,ea,v)
              endif
@@ -105,8 +105,8 @@ call mesh(x,nprevious)
 
              ! ****** If error is small enough, exit loop
 !              if(amean(ea).lt.acy) go to 100
-             if (amean(ea).lt.acy) then
-!             if (amean(ea).lt.acy .and. dabs(y(6,nn)) <= 1.d-4) then
+!             if (amean(ea).lt.acy) then
+             if (amean(ea).lt.acy .and. dabs((y(6,nn)+y(6,nn-1)/2.d0)) <= 1.d-2 .and. dabs((y(7,nn)+y(7,nn-1)/2.d0)) <= 1.d-2) then
 !              if (err.lt.acy) then
             write(6,'(a48,3f15.6,i6,e18.5)') 'yes: 1st_k, final_k, ome2, iter ,amean(ea) =', wave_n, y(5,nn), ome2, iter,amean(ea)
                     write(21,'(4f17.12,i5,e18.5)') wave_n, y(5,nn), ome2, eta, iter, amean(ea)

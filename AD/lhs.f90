@@ -19,8 +19,10 @@ double precision function am(i,j,x,y,in)
   eh = eta
   if (x > ADlimit) eh = 0.d0
   pd = 1.d0 ; pdd = 0.d0
-  b = magnetic_field
   rho = 1.d0/((1.d0 + x*x/8.d0)**2.d0)
+  b = magnetic_field
+!  b = magnetic_field * rho
+
   j1 = -b*b*b*y(5)*y(5)*eh/(eh*b*b*y(5)*y(5)-omegg)
 !   print*,'x,rho',x,rho
   am=0.d0
@@ -60,8 +62,9 @@ double precision function amd(i,j,l,x,y,in)
   eh = eta
   if (x > ADlimit) eh = 0.d0
   pd = 1.d0 ; pdd = 0.d0
-  b = magnetic_field
   rho = 1.d0/((1.d0 + x*x/8.d0)**2.d0)
+  b = magnetic_field
+!  b = magnetic_field * rho
   
   amd=0.d0
   if (i==1.and.j==6.and.l==5) &

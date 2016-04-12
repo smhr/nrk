@@ -54,6 +54,7 @@ subroutine print_rhs(x,y,i,l1,r1,r2,r3)
   rhodd = 3.d0/8.d0*x*x / ((1.d0 + x*x/8.d0)**4.d0) - 0.5d0/((1.d0 + x*x/8.d0)**3.d0)
   psid = x/(2.d0+x*x/4.d0)
   q1 = -b*b*y(5)*y(5)/(omegg*(eh*b*b*y(5)*y(5)-omegg))
+
   f = 0.d0; fd = 0.d0
   ! matrix f coefficients
 !   c1 = (k*k*b*b)/ome2
@@ -116,7 +117,7 @@ subroutine print_rhs(x,y,i,l1,r1,r2,r3)
     
     write(*,'(a15,i5,2f17.12)') 'In meshpoint ', i, eh, b
     
-  
+write(*,'(11f13.8)') x, ADlimit, b, rho, rhod, rhod/rho, rhodd, psid, q1, y(3), omegg 
 !!!!!!!!!!!!! end of new f matrix
 !!!!!!!!!!!!! print f and fd matrices
  print*,"++++++++++++++++"

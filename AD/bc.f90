@@ -23,7 +23,7 @@ subroutine initializev(v)
     v(2) = 4
     v(4) = 6
     v(6) = 2
- elseif (bctype == 433 .or. bctype == 434 .or. bctype == 435 .or. bctype == 436) then
+ elseif (bctype == 433 .or. bctype == 434 .or. bctype == 435 .or. bctype == 436 .or. bctype == 437 .or. bctype == 438) then
     v(2) = 4
     v(7) = 2
     v(4) = 7
@@ -226,6 +226,52 @@ subroutine bc(xxa,xxb,ya,yb,g,gs)
     gs(5,1) = 1.d0
 
     g(6) = yb(2)
+    gs(6,2) = 1.d0
+
+    g(7) = yb(6)
+    gs(7,6) = 1.d0
+
+  elseif (bcType == 437) then
+
+    g(1) = ya(1) - 1.d0
+    gs(1,1) = 1.d0
+
+    g(2) = ya(4)
+    gs(2,4) = 1.d0
+
+    g(3) = ya(3)
+    gs(3,3) = 1.d0
+
+    g(4) = ya(7)
+    gs(4,7) = 1.d0
+
+    g(5) = 0.d0
+    gs(5,1) = 1.d0
+
+    g(6) = 0.d0
+    gs(6,2) = 1.d0
+
+    g(7) = 0.d0
+    gs(7,6) = 1.d0
+
+  elseif (bcType == 438) then
+
+    g(1) = ya(1) - 1.d0
+    gs(1,1) = 1.d0
+
+    g(2) = ya(4)
+    gs(2,4) = 1.d0
+
+    g(3) = ya(3)
+    gs(3,3) = 1.d0
+
+    g(4) = ya(7)
+    gs(4,7) = 1.d0
+
+    g(5) = yb(1)
+    gs(5,1) = 1.d0
+
+    g(6) = yb(3)
     gs(6,2) = 1.d0
 
     g(7) = yb(6)
