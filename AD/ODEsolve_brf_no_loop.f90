@@ -108,21 +108,22 @@ call mesh(x,nprevious)
 !             if (amean(ea).lt.acy) then
              if (amean(ea).lt.acy .and. dabs((y(6,nn)+y(6,nn-1)/2.d0)) <= 1.d-2 .and. dabs((y(7,nn)+y(7,nn-1)/2.d0)) <= 1.d-2) then
 !              if (err.lt.acy) then
-            write(6,'(a48,3f15.6,i6,e18.5)') 'yes: 1st_k, final_k, ome2, iter ,amean(ea) =', wave_n, y(5,nn), ome2, iter,amean(ea)
-                    write(21,'(4f17.12,i5,e18.5)') wave_n, y(5,nn), ome2, eta, iter, amean(ea)
+            write(6,'(a48,3f15.6,i6,e18.5)') 'yes: 1st_k, final_k, ome2, iter ,amean(ea) =', wave_n, dabs(y(5,nn)), ome2, iter &
+                                                                                         & ,amean(ea)
+                    write(21,'(4f17.12,i5,e18.5)') wave_n, dabs(y(5,nn)), ome2, eta, iter, amean(ea)
                     write(6,'(a27,f17.12)') 'eta in ODEsolve is', eta
-                    write(output_file , '( a13, f10.6, a1, f10.6 )' ) 'brf_results/',y(5,nn),'_',ome2
+                    write(output_file , '( a13, f10.6, a1, f10.6 )' ) 'brf_results/',dabs(ome2),'_',dabs(y(5,nn))
                     flush(21)
                     nprevious = 1
                     call printresult(x,y)
                     output_file = sweep_blanks(output_file)
                     open(44,file=output_file)
 
-                    write(rhs_file , '( a13, f10.6, a1, f10.6 )' ) 'rhs_results/',y(5,nn),'_',ome2
+                    write(rhs_file , '( a13, f10.6, a1, f10.6 )' ) 'rhs_results/',dabs(ome2),'_',dabs(y(5,nn))
                     rhs_file = sweep_blanks(rhs_file)
                     open(47,file=rhs_file)
                     do i=1, nn
-                       write(44,'(f9.4,7f17.12)') x(i), y(1,i), y(2,i), y(3,i), y(4,i), y(5,i), y(6,i), y(7,i)
+                       write(44,'(f9.4,7f17.12)') x(i), y(1,i), y(2,i), y(3,i), y(4,i), dabs(y(5,i)), y(6,i), y(7,i)
                        call print_rhs (x(i), y(:,i), i, l1, r1, r2, r3)
                        write(47,'(f9.4,4f17.12)') x(i), l1, r1, r2, r3
                     enddo
@@ -131,17 +132,18 @@ call mesh(x,nprevious)
                     exit
              endif
 
-           write(6,'(a,2x,3f15.6,i6,e18.5)')'NO: 1st_k, final_k, ome2, iter, amean(ea) =', wave_n, y(5,nn), ome2, iter, amean(ea)
+           write(6,'(a,2x,3f15.6,i6,e18.5)')'NO: 1st_k, final_k, ome2, iter, amean(ea) =', wave_n, dabs(y(5,nn)), ome2, iter &
+                                                                                       & , amean(ea)
              flush(6)
             if (verbos == 1) then
-             write(not_converged_file , '( a15, f10.6, a1, f10.6, a1, i3 )' ) 'not_converged/',wave_n,'_',ome2,'_',iter
+             write(not_converged_file , '( a15, f10.6, a1, f10.6, a1, i3 )' ) 'not_converged/',dabs(ome2),'_',wave_n,'_',iter
                     not_converged_file = sweep_blanks(not_converged_file)
                     open(45,file=not_converged_file)
                     do i=1, nn
-                       write(45,'(8f17.8)') x(i), y(1,i), y(2,i), y(3,i), y(4,i), y(5,i), y(6,i), y(7,i)
+                       write(45,'(8f17.8)') x(i), y(1,i), y(2,i), y(3,i), y(4,i), dabs(y(5,i)), y(6,i), y(7,i)
                     enddo
                     close(45)
-             write(deltaY_file , '( a25, f10.6, a1, f10.6, a1, i3 )' ) 'not_converged/deltaY_',wave_n,'_',ome2,'_',iter
+             write(deltaY_file , '( a25, f10.6, a1, f10.6, a1, i3 )' ) 'not_converged/deltaY_',dabs(ome2),'_',wave_n,'_',iter
                     deltaY_file = sweep_blanks(deltaY_file)
                     open(46,file=deltaY_file)
                     do n = 0, nn -1

@@ -55,7 +55,7 @@ subroutine rhs(x,y,f,fd,i)
   b = magnetic_field
 !  b = magnetic_field * rho
   
-  q1 = -b*b*y(5)*y(5)/(omegg*(eh*b*b*y(5)*y(5)-omegg))
+  q1 = b*b*y(5)*y(5)/(omegg*(eh*b*b*y(5)*y(5) + omegg))
   f = 0.d0; fd = 0.d0
   ! matrix f coefficients
 !   c1 = (k*k*b*b)/ome2
@@ -73,9 +73,9 @@ subroutine rhs(x,y,f,fd,i)
   f(1) = rho*y(3) - y(1)*pdd*rhod - y(1)*psid + q1*y(3)
   fd(1,1) = - pdd*rhod - psid
   fd(1,3) = rho + q1
-  fd(1,5) = (-2.d0*b*b*y(5)*y(3)*(omegg*(eh*b*b*y(5)*y(5)-omegg)) &
-          & -2.d0*omegg*eh*b*b*y(5)*(-b*b*y(5)*y(5)*y(3))) &
-          & /(omegg*(eh*b*b*y(5)*y(5)-omegg))**2.d0
+  fd(1,5) = (2.d0*b*b*y(5)*y(3)*(omegg*(eh*b*b*y(5)*y(5) + omegg)) &
+          & - 2.d0*omegg*eh*b*b*y(5)*(b*b*y(5)*y(5)*y(3))) &
+          & /(omegg*(eh*b*b*y(5)*y(5) + omegg))**2.d0
   
   f(2) = y(4)
   fd(2,4) = 1.d0
@@ -97,17 +97,17 @@ subroutine rhs(x,y,f,fd,i)
   f(6) = y(7)
   fd(6,7) = 1.d0
   
-  f(7) = eh*b*b*y(6)*y(5)*y(5)*x - omegg*y(6)*x &
-         & - b*x*(-omegg*y(1)/rho - y(5)*y(5)*y(2)/omegg & 
+  f(7) = eh*b*b*y(6)*y(5)*y(5)*x + omegg*y(6)*x &
+         & + b*x*(-omegg*y(1)/rho - y(5)*y(5)*y(2)/omegg & 
          & - y(5)*y(5)*y(1)*pd/omegg/rho &
          & + y(3)/omegg/rho*rhod)
-  fd(7,1) = -b*x*(-omegg/rho - y(5)*y(5)*pd/omegg/rho)
-  fd(7,2) = b*x*y(5)*y(5)/omegg
-  fd(7,3) = -b*x*rhod/omegg/rho
-  fd(7,5) = 2.d0*eh*b*b*y(6)*x*y(5) - b*x*(-2.d0*y(5)*y(2)/omegg &
+  fd(7,1) = b*x*(-omegg/rho - y(5)*y(5)*pd/omegg/rho)
+  fd(7,2) = - b*x*y(5)*y(5)/omegg
+  fd(7,3) = b*x*rhod/omegg/rho
+  fd(7,5) = 2.d0*eh*b*b*y(6)*x*y(5) + b*x*(-2.d0*y(5)*y(2)/omegg &
             & -2.d0*y(5)*y(1)*pd/omegg/rho)
-  fd(7,6) = eh*b*b*y(5)*y(5)*x - omegg*x
-print*,"in rhs: b is", b
+  fd(7,6) = eh*b*b*y(5)*y(5)*x + omegg*x
+! print*,"in rhs: b is", b
 !!!!!!!!!!!!! end of new f matrix
 !!!!!!!!!!!!! print f and fd matrices
 !  print*,"++++++++++++++++"

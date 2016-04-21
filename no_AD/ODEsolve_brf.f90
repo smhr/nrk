@@ -89,23 +89,24 @@ do while ( wave_n <= wave_n_up .and. wave_n >= wave_n_low )
 !              if(amean(ea).lt.acy) go to 100
              if (amean(ea).lt.acy) then
 !              if (err.lt.acy) then
-            write(6,'(a28,3f15.6,i6,e18.5)') 'yes: 1st_k, final_k, ome2, iter ,amean(ea) =', wave_n, y(5,nn), ome2, iter,amean(ea)
+            write(6,'(a28,3f18.10,i6,e18.5)') 'yes: 1st_k, final_k, ome2, iter ,amean(ea) =', wave_n, dabs(y(5,nn)), ome2, iter &
+                                                                                          & ,amean(ea)
                     write(21,'(3f15.6,i6,e18.5)') wave_n, y(5,nn), ome2, iter, amean(ea)
-                    write(output_file , '( a13, f10.6, a1, f10.6 )' ) 'brf_results/',y(5,nn),'_',ome2
+                    write(output_file , '( a13, f10.6, a1, f10.6 )' ) 'brf_results/',dabs(ome2),'_',dabs(y(5,nn))
                     flush(21)
                     nprevious = 1
                     call printresult(x,y,bz,dbz)
                     output_file = sweep_blanks(output_file)
                     open(44,file=output_file)
                     do i=1, nn-1
-!                        write(44,'(f6.3, 7f12.7)') x(i), y(1,i), y(2,i), y(3,i), y(4,i), y(5,i), bz(i), dbz(i)
-                       write(44,*) x(i), y(1,i), y(2,i), y(3,i), y(4,i), y(5,i), bz(i), dbz(i)
+!                        write(44,'(f6.3, 7f12.7)') x(i), y(1,i), y(2,i), y(3,i), y(4,i), dabs(y(5,i)), bz(i), dbz(i)
+                       write(44,*) x(i), y(1,i), y(2,i), y(3,i), y(4,i), dabs(y(5,i)), bz(i), dbz(i)
                     enddo
                     close(44)
 !                     stop
                     exit
              endif 
-!            write(6,'(a,2x,3f15.6,i6,e18.5)')'NO: 1st_k, final_k, ome2, iter, amean(ea) =', wave_n, y(5,nn), ome2, iter, amean(ea)
+             write(6,'(a,2x,3f15.6,i6,e18.5)')'NO: 1st_k, final_k, ome2, iter, amean(ea) =', wave_n, y(5,nn), ome2, iter, amean(ea)
              flush(6)
          enddo
          ome2 = ome2 - ome2_step
