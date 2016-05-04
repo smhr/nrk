@@ -77,8 +77,8 @@ subroutine bc(xxa,xxb,ya,yb,g,gs)
   g(4) = yb(1)
   gs(4,1) = 1
 
-  g(5) = yb(2)
-  gs(5,2) = 1
+  g(5) = yb(3)
+  gs(5,3) = 1
 
 !   do i = 1,ii
 !     write(6,3) i,g(i),g(i)

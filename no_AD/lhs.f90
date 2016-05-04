@@ -22,8 +22,10 @@ double precision function am(i,j,x,y,in)
 !   print*,'x,rho',x,rho
   am=0.d0
   if (i==j) am = 1.
-  if (i==1.and.j==1) am = x*(pd+b*b/rho*(1.-y(5)*y(5)/ome2*pd))
-  if (i==1.and.j==2) am = x*(rho-y(5)*y(5)*b*b/ome2)
+!   if (i==1.and.j==1) am = x*(pd+b*b/rho*(1.-y(5)*y(5)/ome2*pd))
+  if (i==1.and.j==1) am = x*(ome2*pd+b*b/rho*(ome2-y(5)*y(5)*pd))
+!   if (i==1.and.j==2) am = x*(rho-y(5)*y(5)*b*b/ome2)
+if (i==1.and.j==2) am = x*(ome2*rho-y(5)*y(5)*b*b)
   if (i==3.and.j==3) am = x*rho
   if (i==4.and.j==4) am = x
   if (i==4.and.j==2) am = 1.
@@ -57,8 +59,10 @@ double precision function amd(i,j,l,x,y,in)
   rho = 1./((1. + x*x/8.)**2.)
   
   amd=0.d0
-  if (i==1.and.j==1.and.l==5) amd = -2*x*b*b/(ome2*rho)*pd*y(5)
-  if (i==1.and.j==2.and.l==5) amd = -2*x*b*b/(ome2)*y(5)
+!   if (i==1.and.j==1.and.l==5) amd = -2*x*b*b/(ome2*rho)*pd*y(5)
+  if (i==1.and.j==1.and.l==5) amd = -2*x*b*b/(rho)*pd*y(5)
+!   if (i==1.and.j==2.and.l==5) amd = -2*x*b*b/(ome2)*y(5)
+if (i==1.and.j==2.and.l==5) amd = -2*x*b*b*y(5)
   
 end function amd
 
