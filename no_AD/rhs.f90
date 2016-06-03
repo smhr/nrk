@@ -53,13 +53,17 @@ subroutine rhs(x,y,f,fd,i)
   psid = x/(2.+x*x/4.)
 
   ! matrix f coefficients
-  c1 = (k*k*b*b)/ome2
-  a1 = x*(-c1/rho*(pdd-2.*pd/rho)*rhod + (pdd-2.*b*b/(rho*rho))*rhod + psid)
+!   c1 = (k*k*b*b)/ome2
+  c1 = (k*k*b*b)
+!   a1 = x*(-c1/rho*(pdd-2.*pd/rho)*rhod + (pdd-2.*b*b/(rho*rho))*rhod + psid)
+  a1 = x*(-c1/rho*(pdd-2.*pd/rho)*rhod + ome2*(pdd-2.*b*b/(rho*rho))*rhod + ome2*psid)
   a2 = x*(c1/rho * rhod)
-  a3 = x*b*b/ome2 * (k*k + rhodd/rho - 2.*(rhod/rho)**2.) - b*b/ome2 * rhod/rho - x*rho
+!   a3 = x*b*b/ome2 * (k*k + rhodd/rho - 2.*(rhod/rho)**2.) - b*b/ome2 * rhod/rho - x*rho
+  a3 = x*b*b * (k*k + rhodd/rho - 2.*(rhod/rho)**2.) - b*b * rhod/rho - ome2*x*rho
   
   ! matrix fd coefficients
-  c2 = (2.*k*b*b)/ome2
+!   c2 = (2.*k*b*b)/ome2
+  c2 = (2.*k*b*b)
   
 !   write(6,'(a25,i8,4f8.3)')'i,x,rho,rhod,psid',i,x,rho,rhod,psid
     
@@ -71,7 +75,7 @@ subroutine rhs(x,y,f,fd,i)
 !   fd(1,3) = rho
   fd(1,3) = -a3
   fd(1,5) = x*(c2/rho*(pdd-2.*pd/rho)*rhod * y(1) - (c2/rho * rhod) * y(2) - c2 * y(3))
-  
+    
   f(2) = y(4)
   fd(2,4) = 1.
    

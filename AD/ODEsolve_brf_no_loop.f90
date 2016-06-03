@@ -110,8 +110,8 @@ call mesh(x,nprevious)
 !              if (err.lt.acy) then
             write(6,'(a48,3f15.6,i6,e18.5)') 'yes: 1st_k, final_k, ome2, iter ,amean(ea) =', wave_n, dabs(y(5,nn)), ome2, iter &
                                                                                          & ,amean(ea)
-                    write(21,'(4f17.12,i5,e18.5)') wave_n, dabs(y(5,nn)), ome2, eta, iter, amean(ea)
-                    write(6,'(a27,f17.12)') 'eta in ODEsolve is', eta
+                    write(21,'(4f18.10,i5,e18.5)') wave_n, dabs(y(5,nn)), ome2, eta, iter, amean(ea)
+                    write(6,'(a27,f18.10)') 'eta in ODEsolve is', eta
                     write(output_file , '( a13, f10.6, a1, f10.6 )' ) 'brf_results/',dabs(ome2),'_',dabs(y(5,nn))
                     flush(21)
                     nprevious = 1
